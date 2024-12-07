@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+
+        body {
+            font-family: "Lato", sans-serif;
+            font-size: 16px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-wrap {
+            width: 100%;
+        }
+
+        [hidden] {
+            display: none;
+            visibility: hidden;
+        }
+
+        .acnav {
+            width: 100%;
+        }
+
+        .acnav__list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .acnav__list--level1 {
+            border: 1px solid #fcfcfc;
+        }
+
+        /*.has-children > .acnav__label::before {*/
+        /*    content: "";*/
+        /*    display: inline-block;*/
+        /*    font: normal normal normal 14px/1 FontAwesome;*/
+        /*    font-size: inherit;*/
+        /*    text-rendering: auto;*/
+        /*    margin-right: 1em;*/
+        /*    transition: transform 0.3s;*/
+        /*}*/
+
+        /*.has-children.is-open > .acnav__label::before {*/
+        /*    transform: rotate(405deg);*/
+        /*}*/
+
+        .acnav__link, .acnav__label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            padding: 1em;
+            margin: 0;
+            cursor: pointer;
+            color: #fcfcfc;
+            background: #317589;
+            box-shadow: inset 0 -1px #3988a0;
+            transition: color 0.25s ease-in, background-color 0.25s ease-in;
+        }
+
+        .acnav__link:focus, .acnav__link:hover, .acnav__label:focus, .acnav__label:hover {
+            color: #e3e3e3;
+            background: #2d6b7e;
+        }
+
+        .acnav__link--level2, .acnav__label--level2 {
+            padding-left: 3em;
+            color: black;
+            background: #EDF2FA;
+        }
+
+        .acnav__link--level2:focus, .acnav__link--level2:hover, .acnav__label--level2:focus, .acnav__label--level2:hover {
+            background: #296272;
+        }
+
+        .acnav__link--level3, .acnav__label--level3 {
+            padding-left: 5em;
+            color: black;
+            background: #EDF2FA;
+        }
+
+        .acnav__link--level3:focus, .acnav__link--level3:hover, .acnav__label--level3:focus, .acnav__label--level3:hover {
+            background: #255867;
+        }
+
+        .acnav__link--level4, .acnav__label--level4 {
+            padding-left: 7em;
+            color: black;
+            background: #EDF2FA;
+        }
+
+        .acnav__link--level4:focus, .acnav__link--level4:hover, .acnav__label--level4:focus, .acnav__label--level4:hover {
+            background: #214f5c;
+        }
+
+        .acnav__list--level2, .acnav__list--level3, .acnav__list--level4 {
+            display: none;
+        }
+
+        .is-open > .acnav__list--level2, .is-open > .acnav__list--level3, .is-open > .acnav__list--level4 {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Планировщик</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link active" href="#" onclick="let plan = new PlannerPlanPage()">План</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled">Disabled</a>
+  </li>
+</ul>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <section style="position: sticky; top: 0" class="nav-wrap" id="nav-container">
+
+            </section>
+            <button onclick="objectRegistry.addGroup()" class="btn btn-primary mt-5 btn-lg" style="position:fixed; bottom: 1%; border-radius: 50%">+</button>
+        </div>
+        <div class="col-12 col-md-9" id="page-container" style="height: 200vh">
+
+
+        </div>
+
+        <div class="col-12">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content" id="modal-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+<script>
+    // ==========================================================================
+    //	Multi-level accordion nav
+    // ==========================================================================
+    $('#nav-container').on('click', '.acnav__label', function (e) {
+        if ($(e.target).hasClass("btn") || $(e.target).hasClass("dropdown-item")) return;
+
+        var label = $(this);
+        var parent = label.parent('.has-children');
+        var list = label.siblings('.acnav__list');
+
+        let isOpen = false;
+
+        if (parent.hasClass('is-open')) {
+            list.slideUp('fast');
+            parent.removeClass('is-open');
+        } else {
+            list.slideDown('fast');
+            parent.addClass('is-open');
+            isOpen = true;
+        }
+
+
+        if (label.attr('key')) window.objectRegistry.updateItem(label.attr('key'), label.attr('entity_id'), (v) => {
+            console.log(label.attr('key'), label.attr('entity_id'), v)
+            v.is_open = isOpen;
+        }, false)
+
+    });
+    // ==========================================================================
+</script>
+<script src="/static/Modals.js"></script>
+<script src="/static/PlannerGroupPage.js"></script>
+<script src="/static/Navigation.js"></script>
+<script src="/static/PlannerTaskPage.js"></script>
+<script src="/static/PlannerPlanPage.js"></script>
+<script>
+    window.onload = function () {
+        sendAjax('getGroups', '', 'POST', (r) => {
+
+            window.objectRegistry = new ObjectRegistry({
+                'groups': r
+            })
+
+            const params = new URL(location.href)
+  .searchParams;
+
+
+            window.objectRegistry.render();
+            const taskId = Number.parseInt(params.get("task_id"))
+            if (taskId) {
+                let taskPage = new PlannerTaskPage(taskId);
+            }
+
+
+        })
+
+
+    }
+</script>
+</body>
+</html>
